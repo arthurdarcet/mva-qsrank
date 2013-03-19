@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\textwidth 16.2cm \textheight 23cm \topmargin -0.6cm
+\oddsidemargin 0.31cm \evensidemargin -0.91cm
+
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{algorithm2e}
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{dsfont}
+\usepackage[center]{caption}
+\usepackage{listings} 
+\usepackage{xcolor} 
+\usepackage{textcomp}
+\usepackage{hyperref}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan,           % color of external links
+	pdfborder	= {0 0 0}
+}
+
+\def\endproof{\hfill $\Box$\newline\newline}
+\def\proof{\par\noindent{\it Proof}. \ignorespaces}
+
+\title{Qs Rank and efficient $\epsilon$-neighbor search}
+\author{Arthur Darcet \& Yohann Salaun}
+\date{\today}
+
+\parindent=0pt
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+Article about \citep{QSRank}.
+
+\section{Theoretical Description}
+
+The algorithm of $\epsilon$-neighbor search using the Qs Rank works in two times:
+\begin{itemize}
+	\item[\textbf{1.}] Hash code generation of the data for faster retrieval
+	\item[\textbf{2.}] Ranking of the hash code depending on a query
+\end{itemize}
+The first part can be computed before any requests whereas the second needs the parameters of the search (query $q$ and neighbor distance $\epsilon$).
+
+\subsection{Hash Codes generation}
+
+Such search algorithm are used for huge data with components in high dimensional space. Thus, in order to generate simple hash codes for each input data point $x \in \mathbb{R}^d$, a Principal Component Analysis (PCA) is computed.\\
+Each Hash Code $h$ is then computed by taking the sign of the PCA-projections:
+\[	
+\forall j \in [1;d],\ h_j = 	
+ 	\left \{
+		\begin{array}{c}
+    		1 \text{ if }(PCA(x))_j > 0 \\
+    		0 \text{ if }(PCA(x))_j \leq 0
+		\end{array}
+	\right.
+\]
+In practice, only the first components of the hash codes are computed.\\
+The benefits given by the PCA are numerous:
+\begin{itemize}
+	\item[\textbf{1.}] The PCA allows a dimension decrease but keeps most of the information. This way, hash codes are shorter and the retrieval is still efficient.
+	\item[\textbf{2.}] The PCA is an orthogonal projection that preserves the $L^2$-norm. Thus, the $\epsilon$-ball around a query is still meaningful after PCA.
+	\item[\textbf{3.}] The PCA values of the input data points are uncorrelated which will lead to an efficient ranking with Qs Rank.
+\end{itemize}
+
+\subsection{QsRank for Hash Codes ranking}
+
+\subsection{QSRank approximation}
+
+\section{Implementation}
+
+\subsection{Efficient computation}
+
+\subsection{Retrieval procedure}
+
+Pseudo code ?
+
+\section{Results}
+
+
+\bibliographystyle{plain} %Style of Bibliography: plain / apalike / amsalpha / ...
+\bibliography{literature} %You need a file 'literature.bib' for this.
+
+\end{document}
