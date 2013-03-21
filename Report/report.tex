@@ -51,6 +51,7 @@
 \def\proof{\par\noindent{\it Proof}. \ignorespaces}
 
 \newcommand{\RR}{\mathbb{R}}
+\newcommand{\qr}{\textrm{QsRank}}
 
 \title{Qs Rank and efficient $\epsilon$-neighbor search}
 \author{Arthur Darcet \& Yohann Salaun}
@@ -66,7 +67,7 @@ Article about \citep{QSRank}.
 
 \section{Theoretical Description}
 
-The algorithm of $\epsilon$-neighbor search using the Qs Rank works in two times:
+The algorithm of $\epsilon$-neighbor search using the QsRank works in two times:
 \begin{itemize}
 	\item[\textbf{1.}] Hash code generation of the data for faster retrieval
 	\item[\textbf{2.}] Ranking of the hash code depending on a query
@@ -76,13 +77,13 @@ The first part can be computed before any requests whereas the second needs the 
 \subsection{Hash Codes generation}
 
 Such search algorithm are used for huge data with components in high dimensional space. Thus, in order to generate simple hash codes for each input data point $x \in \RR^d$, a Principal Component Analysis (PCA) is computed.\\
-Each Hash Code $h$ is then computed by taking the sign of the PCA-projections:
+The hash code $h$ of $x$ is then computed by taking the sign of the PCA-projections:
 \[	
 \forall j \in [1;d],\ h_j = 	
  	\left \{
 		\begin{array}{c}
-    		1 \text{ if }(PCA(x))_j > 0 \\
-    		0 \text{ if }(PCA(x))_j \leq 0
+    		1 \text{ if }(PCA(x, \{x_i\}_i))_j > 0 \\
+    		0 \text{ if }(PCA(x, \{x_i\}_i))_j \leq 0
 		\end{array}
 	\right.
 \]
@@ -98,7 +99,7 @@ The benefits given by the PCA are numerous:
 
 We suppose, that the projection $y$ of the input data points $x$ are distributed along a probability distribution function $p$. Then, with a given query $q$, a neighbor distance $\epsilon$ and a hash code $h$, the Qs Rank formula is defined by:
 \[
-	QsRank(q, h, \epsilon) = \frac{\int_{NN(q,\epsilon) \cap S(h)} p(y) dy}{\int_{NN(q,\epsilon)} p(y) dy}
+	\qr(q, h, \epsilon) = \frac{\int_{NN(q,\epsilon) \cap S(h)} p(y) dy}{\int_{NN(q,\epsilon)} p(y) dy}
 \]
 where:
 \begin{enumerate}
@@ -108,7 +109,7 @@ where:
 
 The QsRank can only be seen as a probability, with Bayes rule:
 \[
-	QsRank(q, h, \epsilon) = \frac{\mathbb{P}(y\in NN(q,\epsilon) \cap S(h))}{\mathbb{P}(y\in NN(q,\epsilon))} = \mathbb{P}(y \in S(h) | y\in NN(q,\epsilon))
+	\qr(q, h, \epsilon) = \frac{\mathbb{P}(y\in NN(q,\epsilon) \cap S(h))}{\mathbb{P}(y\in NN(q,\epsilon))} = \mathbb{P}(y \in S(h) | y\in NN(q,\epsilon))
 \]
 Thus, the QsRank only ranks hash codes with respect to their probability of containing many $\epsilon$-neighbors.
 
@@ -117,7 +118,7 @@ Thus, the QsRank only ranks hash codes with respect to their probability of cont
 In order to compute fast retrieval, the QsRank will be approximated by a lighter formula.\\
 First, only the top $k$ dimensions of the PCA projection will be used ($k$ will be defined afterward in the next section). Thus, $NN(q,\epsilon)$ becomes $NN(q^k,\epsilon)$ and $S(h)$ becomes $S(h^k)$ where $x^k$ is the k-top dimensions of a vector $x \in \RR^d$. This approximation seems legit since the aim of the PCA is to find the dimensions where most of the information is kept.
 \[
-	QsRank(q, h, \epsilon) \approx \frac{\int_{NN(q^k,\epsilon) \cap S(h^k)} p(y^k) dy^k}{\int_{NN(q^k,\epsilon)} p(y^k) dy^k}
+	\qr(q, h, \epsilon) \approx \frac{\int_{NN(q^k,\epsilon) \cap S(h^k)} p(y^k) dy^k}{\int_{NN(q^k,\epsilon)} p(y^k) dy^k}
 \]
 Another approximation is to replace the $\epsilon$-ball by an $\epsilon$-hypercube:
 \[
@@ -125,11 +126,11 @@ Another approximation is to replace the $\epsilon$-ball by an $\epsilon$-hypercu
 \]
 Moreover, since the PCA produces uncorrelated projections, each dimension of $p(y)$ is supposed to be independent. The QsRank approximation then becomes:
 \[
-	QsRank(q, h, \epsilon) \approx \prod_{i=1}^k \frac{\int_{|y^k_i - q^k_i| < \epsilon, y^k_i h^k_i > 0 } p(y^k_i) dy^k_i}{\int_{|y^k_i - q^k_i| < \epsilon} p(y^k_i) dy^k_i} = \prod_{i=1}^k \mathbb{P}(y^k_i \in S(h^k_i) | y^k_i \in HC(q^k_i,\epsilon))
+	\qr(q, h, \epsilon) \approx \prod_{i=1}^k \frac{\int_{|y^k_i - q^k_i| < \epsilon, y^k_i h^k_i > 0 } p(y^k_i) dy^k_i}{\int_{|y^k_i - q^k_i| < \epsilon} p(y^k_i) dy^k_i} = \prod_{i=1}^k \mathbb{P}(y^k_i \in S(h^k_i) | y^k_i \in HC(q^k_i,\epsilon))
 \]
 The last approximation is to consider that the $y$ are generated from a uniform law. This assumption accelerates a lot the computation and seems to work quite well in accordance with the authors of \citep{QSRank}. The final formula thus becomes:
 \begin{eqnarray*}
-	QsRank(q, h, \epsilon) 
+	\qr(q, h, \epsilon) 
 	& \approx & \prod_{i=1}^k \frac{\int_{|y^k_i - q^k_i| < \epsilon, y^k_i h^k_i > 0 } dy^k_i}{\int_{|y^k_i - q^k_i| < \epsilon} dy^k_i} \\
 	& \approx & \prod_{i=1}^k \text{clamp} \left(\frac{1}{2}\left( 1 + \frac{h^k_i q^k_i}{\epsilon} \right), [0;1] \right)                  
 \end{eqnarray*}
