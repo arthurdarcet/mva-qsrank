@@ -1,0 +1,6 @@
+/data/features/*
+!/data/features/.keep
+/data/images/*
+!/data/images/.keep
+
+*.m~
