@@ -1,7 +1,11 @@
 Get data from :
+ - http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/README2.txt
  - http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/feat_oxc1_hesaff_sift.bin.tgz
+ - http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/word_oxc1_hesaff_sift_16M_1M.tgz
  - http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/oxbuild_images.tgz
 
 Unzip to
- - data/features
- - data/images
+ - README2.txt			->	data/features
+ - feat_oxc1_hesaff_sift.bin	->	data/features
+ - word_oxc1_hesaff_sift_16M_1M	->	data/features
+ - oxbuild_images/*		->	data/images

@@ -1,7 +1,7 @@
 function [hashcodes_map, hashcodes] = hashcodes(scores, bits)
 %HASHCODES Calculate the hashmap mapping K first bits of the hashcodes to
 %the points indexes
-%   K must be lower than 64
+    assert(length(bits) <= 64, 'bits length must be lower than 64');
     bin_hashcodes = bi2de(scores(:,bits)>0);
     hashcodes_map = containers.Map('KeyType', 'uint64', 'ValueType', 'any');
     for i=1:length(bin_hashcodes)
@@ -15,7 +15,7 @@ function [hashcodes_map, hashcodes] = hashcodes(scores, bits)
     hashcodes = zeros(length(keys), length(bits));
     for i=1:size(hashcodes, 1)
         points = hashcodes_map(keys{i});
-        hashcodes(i, :) = scores(points(1), bits)>0;
+        hashcodes(i, :) = sign(scores(points(1), bits));
     end
 end
 
