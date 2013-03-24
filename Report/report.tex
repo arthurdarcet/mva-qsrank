@@ -11,7 +11,6 @@
 \usepackage{amsbsy}
 \usepackage{amssymb}
 \usepackage{algorithm2e}
-\usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{psfrag}
 \usepackage{epsfig}
@@ -63,7 +62,8 @@
 
 \section{Overview}
 
-Article about \citep{QSRank}.
+The QsRank algorithm, described in \citep{QSRank}, is a method that allows a ranking for binary hash codes to efficiently perform $\epsilon$-neighbors search in large data. The aim of this problem is to, for a given query $q$ and a given radius $\epsilon$, quickly finds the data subset $Y = (y_i)_i$ such that $\forall i,\  ||y_i-q|| < \epsilon$.\\
+Methods based on the Hamming distance have been recently developed to solve efficiently such a problem for large data. However these latter methods often lack of precision due to their binarization of the query which induces a lack of speed in the performances of their algorithm. The methods presented here, performs a more accurate ranking for hash codes and thus allows a faster and more efficient method for $\epsilon$-neighbors retrieval.
 
 \section{Theoretical Description}
 
@@ -149,7 +149,22 @@ Once the query $q$ is given, the logarithmic QsRank is computed for the $2^k$ di
 
 \subsection{Retrieval procedure}
 
-Pseudo code ?
+\begin{algorithm}[H]
+
+\textbf{Input} : input data $X \in \RR^{n \times d}$, query $q$, radius $\epsilon$\\
+\textbf{Parameters}: hash codes length $K1$ and $K2$, number of buckets $L$.\\
+\textit{Precomputation}\\
+$Y = PCA(X)$\\
+\For{$i=1..K1+K2$}{
+	\textbf{Compute} the logarithmic sub-QsRanks : $\log\left(\text{clamp} \left(\frac{1}{2}\left( 1 + \frac{h^k_i q^k_i}{\epsilon} \right), [0;1] \right)\right)$
+}
+\textit{$\epsilon$-search}\\
+\textbf{Sort} the buckets by $K1$-QsRank.\\
+\textbf{Pick} the $L^{th}$ first buckets.\\
+\textbf{Sort} the buckets hash codes by $(K1+K2)$-QsRank.\\
+\textbf{Return} the $\epsilon$-neighbors.
+\end{algorithm}
+
 
 \section{Results}
 
