@@ -152,16 +152,16 @@ Once the query $q$ is given, the logarithmic QsRank is computed for the $2^k$ di
 \begin{algorithm}[H]
 
 \textbf{Input} : input data $X \in \RR^{n \times d}$, query $q$, radius $\epsilon$\\
-\textbf{Parameters}: hash codes length $K1$ and $K2$, number of buckets $L$.\\
+\textbf{Parameters}: hash codes length $K_1$ and $K_2$, number of buckets $L$.\\
 \textit{Precomputation}\\
 $Y = PCA(X)$\\
-\For{$i=1..K1+K2$}{
+\For{$i=1~..~K_1+K_2$}{
 	\textbf{Compute} the logarithmic sub-QsRanks : $\log\left(\text{clamp} \left(\frac{1}{2}\left( 1 + \frac{h^k_i q^k_i}{\epsilon} \right), [0;1] \right)\right)$
 }
 \textit{$\epsilon$-search}\\
-\textbf{Sort} the buckets by $K1$-QsRank.\\
+\textbf{Sort} the buckets by $K_1$-QsRank.\\
 \textbf{Pick} the $L^{th}$ first buckets.\\
-\textbf{Sort} the buckets hash codes by $(K1+K2)$-QsRank.\\
+\textbf{Sort} the buckets hash codes by $(K_1+K_2)$-QsRank.\\
 \textbf{Return} the $\epsilon$-neighbors.
 \end{algorithm}
 
