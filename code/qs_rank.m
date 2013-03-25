@@ -6,6 +6,6 @@ function res = qs_rank(q, h, e)
     A = (1 + repmat(q, size(h,1), 1) .* h ./ e) ./ 2;
     A(A>1) = 1;
     A(A<0) = 0;
-    res = prod(A,2);
+    res = sum(log(A),2);
 end
 
