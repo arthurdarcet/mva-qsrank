@@ -1,7 +1,8 @@
 clear all;
 addpath('utils');
 % Number of SIFT vector to load. ~4000*N bytes of RAM required
-N = 1e6;
+% N < 3e5 for the PCA to work
+N = 3e5;
 
 K1 = 16;
 K2 = 48;

@@ -13,7 +13,7 @@ function [hashcodes_map, hashcodes] = hashcodes(scores, bits)
     end
     keys = hashcodes_map.keys;
     hashcodes = zeros(length(keys), length(bits));
-    for i=1:size(hashcodes, 1)
+    parfor i=1:size(hashcodes, 1)
         points = hashcodes_map(keys{i});
         hashcodes(i, :) = sign(scores(points(1), bits));
     end

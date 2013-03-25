@@ -8,7 +8,6 @@ function res = qs_filter(scores, Q, bits, e, L)
     if isfinite(L)
         indexes = indexes(1:L);
     end
-    size(ranks)
     res = extract_indexes(hashmap, indexes, ranks);
 end
 

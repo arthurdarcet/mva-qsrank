@@ -4,7 +4,7 @@ function res = bi2de(B)
 %           If B is a matrix, each row is interpreted separately
     if size(B, 1) > 1
         res = zeros(1, size(B, 1), 'uint64');
-        for i=1:length(res)
+        parfor i=1:length(res)
             res(i) = bi2de(B(i,:));
         end
         return
