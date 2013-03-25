@@ -145,7 +145,16 @@ Opposed to the Hamming distance, this measure has many substantial advantages :
 
 \subsection{Efficient computation}
 
-Once the query $q$ is given, the logarithmic QsRank is computed for the $2^k$ different hash codes. This results in $\mathcal{O}(k)$ logarithm computation and $\mathcal{O}(k 2^k)$ additions. Moreover, only hash codes with non zeros probabilities have to be computed, which accounts for only $15\%$ of the data points according to the experiments made in \citep{QSRank}.
+Once the query $q$ is given, the logarithmic QsRank is computed for the $2^k$ different hash codes. This results in $\mathcal{O}(k)$ logarithm computation and $\mathcal{O}(k 2^k)$ additions. Moreover, only hash codes with non zeros probabilities have to be computed, which accounts for only $15\%$ of the data points according to the experiments made in \citep{QSRank}.\\
+The idea of the retrieval is also to make a pre-selection with QsRank computed only on the first $K_1$ bits. Then, the $L$ first buckets are selected and more accurate re-ranking (on $K_1+K_2$ bits) is computed to select the $\epsilon$-neighbors.
+
+\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[width=.6\linewidth]{Images/algo.png}
+	\end{center}
+	\caption{Retrieval procedure: Buckets ranking ($K_1$ bits). Neighbors re-ranking ($K_1+K_2$ bits). Image credits from \citep{QSRank}}
+	\label{fig:algo}
+\end{figure}
 
 \subsection{Retrieval procedure}
 
