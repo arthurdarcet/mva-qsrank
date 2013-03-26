@@ -195,7 +195,7 @@ We have implemented the algorithm the way it is explained above. The parameters 
 
 Then, in order to evaluate its efficiency, we have generated many queries and compared the results obtained by the algorithm and the true neighbors with the \textit{recall loss}:
 \[
-	r_{loss} = 1-\frac{|\text{found neighbours}|}{|\text{true neighbours}|} 
+	r_{loss} = \frac{|\text{found neighbours}|}{|\text{true neighbours}|}
 \]
 The results can be observed on figure \ref{fig:rloss}
 
@@ -207,8 +207,19 @@ The results can be observed on figure \ref{fig:rloss}
 	\label{fig:rloss}
 \end{figure}
 
-This graph shows that $\epsilon$ needs not to be too high in order to keep the approximations made in the previous sections correct. Otherwise, the results are quickly inaccurate.\\
-Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time.
+This graph shows that $\epsilon$ needs not to be too high in order to keep the approximations made in the previous sections correct. Otherwise, the results are quickly inaccurate.
+
+\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[width=.8\linewidth]{Images/k1_rloss.png}
+	\end{center}
+	\caption{Recall Loss function of $K_1$.}
+	\label{fig:k1_rloss}
+\end{figure}
+
+This graph shows the loss as a function of $K_1$: when $K_1$ get higher, the number of buckets increase and the average number of points per bucket decrease. With a fixed number $L$ of buckets selected, the number of points that are considered irrelevant by the algorithm after the $K_1$-QsRanking increase when $K_1$ decrease. This explain why the loss is inversely proportional to $K_1$.
+
+Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time (\textit{Matlab} require our algorithm to convert back and forth between table of $-1$ and $1$ and \textit{uint64} to represent the hashcodes. This shouldn't be necessary).
 
 \section{Conclusion}
 
