@@ -1,5 +1,6 @@
 clear all;
 close all;
+addpath('utils');
 
 n = 500;
 

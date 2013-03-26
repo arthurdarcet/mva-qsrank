@@ -2,12 +2,12 @@ clear all;
 addpath('utils');
 % Number of SIFT vector to load. ~4000*N bytes of RAM required
 % N < 3e5 for the PCA to work
-N = 3e5;
+N = 1e4;
 
 K1 = 16;
 K2 = 48;
 L = 50;
-epsilon = 200;
+epsilon = 150;
 
 features = load_data(N);
 query = floor(rand()*N) + 1;
