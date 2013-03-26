@@ -174,7 +174,14 @@ $Y = PCA(X)$\\
 \textbf{Return} the $\epsilon$-neighbors.
 \end{algorithm}
 
-\newpage
+\subsection{Implementation details}
+Our implementation use \textit{Matlab} with the statistic toolbox.
+The script \verb=main.m= contains an exemple search in data points loaded from \verb=data/feat_oxc1_hesaff_sift.bin=\footnote{Download from \url{http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/feat_oxc1_hesaff_sift.bin.tgz} and unzip to data/}.\\
+
+The script \verb=recall_graph.m= was used to generate the two recall-loss graph that are presented in this report.\\
+
+And the script \verb=demo2d.m= show the first two steps of the algorithm (PCA and $K_1$-QsRank separation) in $2D$\\
+
 
 \section{Results}
 
@@ -219,9 +226,8 @@ This graph shows that $\epsilon$ needs not to be too high in order to keep the a
 
 We can also observe, in figure \ref{fig:k1_rloss}, the loss as a function of $K_1$: when $K_1$ get higher, the number of buckets increase and the average number of points per bucket decrease. With a fixed number $L$ of buckets selected, the number of points that are considered irrelevant by the algorithm after the $K_1$-QsRanking increase when $K_1$ decrease. This explain why the loss is inversely proportional to $K_1$.\\
 
-Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time (\textit{Matlab} require our algorithm to convert back and forth between table of $-1$ and $1$ and \textit{uint64} to represent the hashcodes. This shouldn't be necessary).
+Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time (\textit{Matlab} require our algorithm to convert back and forth between table of $-1$ and $1$ and \textit{uint64} to represent the hashcodes. This shouldn't be necessary).\\
 
-\newpage
 
 \section{Conclusion}
 
