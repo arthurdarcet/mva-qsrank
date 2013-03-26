@@ -1,6 +1,2 @@
-/data/features/*
-!/data/features/.keep
-/data/images/*
-!/data/images/.keep
-
+/data/feat_oxc1_hesaff_sift.bin
 *.m~

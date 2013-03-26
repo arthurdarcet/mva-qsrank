@@ -4,7 +4,7 @@ function feat = load_data(N, feat_dir)
 %       - feat_dir [default: '../data/features'] : directory to load from
     FEAT_FILE = 'feat_oxc1_hesaff_sift.bin';    
     if nargin < 2
-        feat_dir = fullfile('..', 'data', 'features');
+        feat_dir = fullfile('..', 'data');
     end
 
     fid = fopen(fullfile(feat_dir, FEAT_FILE), 'r');
