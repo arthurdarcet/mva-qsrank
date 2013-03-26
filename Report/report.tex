@@ -39,7 +39,7 @@
     pdfkeywords={keyword1} {key2} {key3}, % list of keywords
     pdfnewwindow=true,      % links in new window
     colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    linkcolor=blue,          % color of internal links (change box color with linkbordercolor)
     citecolor=blue,        % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=cyan,           % color of external links
@@ -151,8 +151,8 @@ The idea of the retrieval is also to make a pre-selection with QsRank computed o
 \begin{figure}[htbp]
 	\begin{center}
 	\includegraphics[width=.6\linewidth]{Images/algo.png}
-	\end{center}
 	\caption{Retrieval procedure: Buckets ranking ($K_1$ bits). Neighbors re-ranking ($K_1+K_2$ bits). Image credits from \citep{QSRank}}
+	\end{center}
 	\label{fig:algo}
 \end{figure}
 
@@ -174,8 +174,45 @@ $Y = PCA(X)$\\
 \textbf{Return} the $\epsilon$-neighbors.
 \end{algorithm}
 
+\newpage
 
 \section{Results}
+
+We have implemented the algorithm the way it is explained above. The parameters used are the one proposed in \citep{QSRank}. They are summed up in table \ref{params}.
+\begin{table}[htbp]
+\begin{center}
+  \begin{tabular}{|c|c|c|}
+		\hline
+		$K_1$ & $K_2$ & L \\
+		\hline
+		16 & 48 & 50\\
+		\hline
+\end{tabular}
+\caption{Default parameters used for the algorithm.}
+\end{center}
+\label{params}
+\end{table}
+
+Then, in order to evaluate its efficiency, we have generated many queries and compared the results obtained by the algorithm and the true neighbors with the \textit{recall loss}:
+\[
+	r_{loss} = 1-\frac{|\text{found neighbours}|}{|\text{true neighbours}|} 
+\]
+The results can be observed on figure \ref{fig:rloss}
+
+\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[width=.8\linewidth]{Images/rloss.png}
+	\end{center}
+	\caption{Recall Loss function of epsilon.}
+	\label{fig:rloss}
+\end{figure}
+
+This graph shows that $\epsilon$ needs not to be too high in order to keep the approximations made in the previous sections correct. Otherwise, the results are quickly inaccurate.\\
+Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time.
+
+\section{Conclusion}
+
+With this article, we have discovered the field of large-scale-$\epsilon$-neighbors search. A field that becomes more and more significant because of the huge increase of available data on the internet.  
 
 \bibliographystyle{plain} %Style of Bibliography: plain / apalike / amsalpha / ...
 \bibliography{literature} %You need a file 'literature.bib' for this.
