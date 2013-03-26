@@ -178,7 +178,7 @@ $Y = PCA(X)$\\
 
 \section{Results}
 
-We have implemented the algorithm the way it is explained above. The parameters used are the one proposed in \citep{QSRank}. They are summed up in table \ref{params}.
+We have implemented the algorithm the way it is explained above. The parameters used are the one proposed in \citep{QSRank}. They are summed up in the table below.
 \begin{table}[htbp]
 \begin{center}
   \begin{tabular}{|c|c|c|}
@@ -190,7 +190,7 @@ We have implemented the algorithm the way it is explained above. The parameters 
 \end{tabular}
 \caption{Default parameters used for the algorithm.}
 \end{center}
-\label{params}
+\label{tab:params}
 \end{table}
 
 Then, in order to evaluate its efficiency, we have generated many queries and compared the results obtained by the algorithm and the true neighbors with the \textit{recall loss}:
@@ -217,13 +217,16 @@ This graph shows that $\epsilon$ needs not to be too high in order to keep the a
 	\label{fig:k1_rloss}
 \end{figure}
 
-This graph shows the loss as a function of $K_1$: when $K_1$ get higher, the number of buckets increase and the average number of points per bucket decrease. With a fixed number $L$ of buckets selected, the number of points that are considered irrelevant by the algorithm after the $K_1$-QsRanking increase when $K_1$ decrease. This explain why the loss is inversely proportional to $K_1$.
+We can also observe, in figure \ref{fig:k1_rloss}, the loss as a function of $K_1$: when $K_1$ get higher, the number of buckets increase and the average number of points per bucket decrease. With a fixed number $L$ of buckets selected, the number of points that are considered irrelevant by the algorithm after the $K_1$-QsRanking increase when $K_1$ decrease. This explain why the loss is inversely proportional to $K_1$.\\
 
 Although, the algorithm seems to have good speed performances ($\sim 0.2s$ according to \citep{QSRank}), ours is not as fast. This could be explained by the use of the \textit{Matlab} software and the hashmap generations that seems to take too much time (\textit{Matlab} require our algorithm to convert back and forth between table of $-1$ and $1$ and \textit{uint64} to represent the hashcodes. This shouldn't be necessary).
 
+\newpage
+
 \section{Conclusion}
 
-With this article, we have discovered the field of large-scale-$\epsilon$-neighbors search. A field that becomes more and more significant because of the huge increase of available data on the internet.  
+With this article, we have discovered the field of large-scale-$\epsilon$-neighbors search. A field that becomes more and more significant because of the huge increase of available data on the internet. The method presented in \citep{QSRank} differs a lot from the other state-of-the-art ones by not using the Hamming distance for the retrieval. It induces a better precision for the search. Moreover, the number of bits used is much smaller (only 64 bits) which reduces memory cost speed up the process. However, this number is not very movable since it depends on the PCA and thus on the initial dimension of the space.\\
+Finally, this method is powerful by its simplicity and efficiency. Many approximations are made to make this algorithm fast but it is still very efficient as it is equal to other state-of-the-art methods.
 
 \bibliographystyle{plain} %Style of Bibliography: plain / apalike / amsalpha / ...
 \bibliography{literature} %You need a file 'literature.bib' for this.

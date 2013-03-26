@@ -126,6 +126,7 @@ $\forall j \in [1;d],\ h_j = $
     \item[$\bullet$]1 $\text{ if }(PCA(x, \{x_i\}_i))_j > 0$
     \item[$\bullet$]0 $\text{ if }(PCA(x, \{x_i\}_i))_j \leq 0$
 \end{itemize}
+\pause
 \vspace{1em}
 \begin{itemize}
 	\item[\textbf{1.}]dimension decrease but keep information
@@ -174,7 +175,7 @@ where $HC(q^k,\epsilon) = \{y^k \in \RR^k \text{ s.t. } \forall i \in [1;k], |y^
 \[
 	\qr(q, h, \epsilon) \approx \prod_{i=1}^k \mathbb{P}(y^k_i \in S(h^k_i) | y^k_i \in HC(q^k_i,\epsilon))
 \]
-We suppose also that $y^k\sim \mathcal{U}(\RR^k)$:
+We suppose also that $(y_i^k)_i \sim \mathcal{U}(\RR^k)$:
 \[
 	\begin{array}{ccc}
 	\qr(q, h, \epsilon) 
